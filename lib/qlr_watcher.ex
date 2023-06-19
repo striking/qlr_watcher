@@ -1,18 +1,5 @@
 defmodule QlrWatcher do
-  @moduledoc """
-  Documentation for `QlrWatcher`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> QlrWatcher.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def check_qlr_for_new_file_and_download() do
+    QlrWatcher.Impl.Downloader
   end
 end

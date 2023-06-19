@@ -7,14 +7,14 @@ defmodule QlrWatcher.Impl.Downloader do
     |> get_html_from_page
     |> parse_html  
     |> get_latest_report_link
-    |> check_file_exists?
+    |> download_if_new_file
 
     :timer.sleep(43200)
 
     download_new_pdf()
   end
 
-  def check_file_exists?(url) do
+  def download_if_new_file(url) do
     {:ok, file_list} = File.ls("priv/")
     file_name = String.slice(url, 11, 11)
 
@@ -33,6 +33,8 @@ defmodule QlrWatcher.Impl.Downloader do
 
   def write_pdf(%HTTPoison.Response{body: body}, file_name) do
     File.write("priv/#{file_name}", body)
+    file_path = Path.expand("priv/#{file_name}")
+    file_path
   end
 
   def write_pdf(error), do: error
